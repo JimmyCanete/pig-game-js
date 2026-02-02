@@ -14,31 +14,44 @@ html {
 body {
   font-family: 'Nunito', sans-serif;
   font-weight: 400;
-  height: 100vh;
+  min-height: 100vh;
   color: #333;
   background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* espaço em volta em mobile */
+  padding: 1.6rem;
 }
 
 /* LAYOUT */
 main {
   position: relative;
-  width: 100rem;
-  height: 60rem;
+
+  /* antes: width: 100rem; height: 60rem; */
+  width: min(100rem, 100%);
+  max-width: 100%;
+  height: auto;
+  min-height: 56rem;
+
   background-color: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(200px);
-  filter: blur();
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* fallback caso o blur não funcione */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
   border-radius: 9px;
   overflow: hidden;
+
   display: flex;
 }
 
 .player {
-  flex: 50%;
-  padding: 9rem;
+  flex: 1;
+  padding: 6rem 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,6 +67,7 @@ main {
   word-spacing: 2px;
   font-weight: 300;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .score {
@@ -82,7 +96,7 @@ main {
   opacity: 0.8;
   border-radius: 9px;
   color: #fff;
-  width: 65%;
+  width: min(65%, 28rem);
   padding: 2rem;
   text-align: center;
   transition: all 0.75s;
@@ -114,13 +128,17 @@ main {
   font-weight: 400;
   transition: all 0.2s;
 
-  background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   padding: 0.7rem 2.5rem;
   border-radius: 50rem;
   box-shadow: 0 1.75rem 3.5rem rgba(0, 0, 0, 0.1);
+
+  /* evita cortes em ecrãs pequenos */
+  max-width: calc(100% - 3.2rem);
+  white-space: nowrap;
 }
 
 .btn::first-letter {
@@ -130,7 +148,7 @@ main {
 }
 
 .btn--new {
-  top: 4rem;
+  top: 2rem;
 }
 .btn--roll {
   top: 39.3rem;
@@ -154,6 +172,8 @@ main {
   top: 16.5rem;
   transform: translateX(-50%);
   height: 10rem;
+  max-width: 30vw;
+  object-fit: contain;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
 }
 
@@ -168,4 +188,104 @@ main {
 
 .hidden {
   display: none;
+}
+
+/* =========================
+   RESPONSIVO (tablet/mobile)
+   ========================= */
+
+/* tablets */
+@media (max-width: 900px) {
+  html {
+    font-size: 56.25%; /* 9px */
+  }
+
+  main {
+    min-height: 52rem;
+  }
+
+  .player {
+    padding: 5rem 3rem;
+  }
+
+  .btn--roll {
+    top: 37rem;
+  }
+  .btn--hold {
+    top: 43rem;
+  }
+
+  .dice {
+    top: 15rem;
+    height: 9rem;
+  }
+}
+
+/* telemóvel */
+@media (max-width: 600px) {
+  html {
+    font-size: 50%; /* 8px */
+  }
+
+  /* layout em coluna */
+  main {
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    padding-top: 7.5rem; /* espaço para o botão "new" */
+    padding-bottom: 10.5rem; /* espaço para roll/hold */
+  }
+
+  .player {
+    padding: 3.2rem 2rem;
+    width: 100%;
+  }
+
+  .name {
+    font-size: 3.2rem;
+  }
+
+  .score {
+    font-size: 6.5rem;
+  }
+
+  .current {
+    width: min(90%, 34rem);
+    padding: 1.6rem;
+  }
+
+  .dice {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 8rem;
+  }
+
+  .btn--new {
+    top: 1.5rem;
+  }
+
+   .btn--roll {
+    top: auto;
+    bottom: 7.5rem; 
+  }
+
+  .btn--hold {
+    top: auto;
+    bottom: 2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .btn {
+    font-size: 1.5rem;
+    padding: 0.7rem 1.6rem;
+  }
+
+  .btn::first-letter {
+    font-size: 2rem;
+  }
+
+  .score {
+    font-size: 5.8rem;
+  }
 }
